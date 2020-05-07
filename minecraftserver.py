@@ -4,126 +4,125 @@ import wget
 from time import sleep
 from bs4 import BeautifulSoup
 import requests
-if os.name =="posix":
-    os.system("clear")
-    defLoc = os.getcwd()
-    print("OS detected: Linux")
-    print("Welcome to Minecraft Server Manager .")
-    def download(version,location):
+os.system("clear")
+defLoc = os.getcwd()
+def download(version):
+    try:
+        soup = BeautifulSoup(requests.get(f"https://mcversions.net/download/{version}").content,"html.parser")
+        if soup.title.string =="MCVersions.net - 404 File not found":
+            raise ValueError()
+        elif soup.title.string ==f"MCVersions.net - Create your own {version} Minecraft server!":  
+            mydivs = soup.find_all('a', "button")
+            link = mydivs[0].get("href")
+            wget.download(link)
+            print("\nDownload completed successfully.")
+    except ValueError:
+        print(f"{version} version can't found, make sure to don't mistake.")
+        return "cancel"
+    except:
+        print("Something went wrong")
+def setup(ram):
+    if ram.strip().lower().isnumeric():
         try:
-            r = requests.get(f"https://mcversions.net/download/{version}")
-            soup = BeautifulSoup(r.content,"html.parser")
-            if soup.title.string =="MCVersions.net - 404 File not found":
-                print(f"{version} can't found, make sure to don't mistake.")
-            elif soup.title.string ==f"MCVersions.net - Create your own {version} Minecraft server!":  
-                mydivs = soup.find_all('a', "button")
-                link = mydivs[0].get("href")
-                print("server.jar başarıyla bulundu, indirme işlemi başlayacak.")
-                wget.download(link)
-                print("\nIndirme işlemi başarıyla tamamlandı.")
-                print("Kuruluma geçiliyor.")
-                print("Server için ayıracağınız ram miktarını giriniz(Varsayılan olarak 1024 ayarlıdır): ")
-                secilenram = input('MB: ') or '1024'
-                kur(secilenram)
-            else:
-                print("tanımlanamayan hata")
-        except:
-            print("tanımlanamayan hata")
-        
-    def kur(ram):
-        if ram.strip().lower().isnumeric():
-            os.system('echo #!/bin/bash > start.sh')
-            os.system(f'echo java -Xmx{ram}M -Xms{ram}M -jar server.jar nogui > start.sh ')
+            os.system('echo #!/bin/bash\n > start.sh')
+            os.system(f'echo java -Xmx{ram}M -Xms{ram}M -jar server.jar nogui >> start.sh ')
             os.system('chmod +x start.sh')
-            print(f"{ram}MB ram ile server başlatma dosyası başarıyla oluşturuldu.")
-            os.system('./start.sh')
-            sleep(2)
-            os.system('echo eula=true > eula.txt')
-            print('eula başarıyla düzenlendi.')
-            baslat()
-            
+            print(f"Starting file created successfully with {ram}MB ram.")
+            if not os.path.exists('eula.txt'):
+                print("Editing eula file.")
+                os.system('./start.sh')
+                sleep(1)
+                os.system('echo eula=true > eula.txt')
+                print('Eula edited successfully.')
+        except:
+            print("Something went wrong")
 
-
-        else:
-            print("Hatalı veri girişi, tekrar deneyiniz.")
-
-    def baslat():
-        print("Serveri başlatmadan önce, server.properties dosyanızı ayarladığınızdan emin olun.")
-        print("Server çalışırken durdurmak için stop yazın.")
-        print("server.properties dosyasını düzenlemek ister misiniz?")
-        onay4 = input("(E/H): ")
-        if onay4.strip().lower() == "e":
-            os.system("clear")
-            os.system("nano server.properties")
-        elif onay4.strip().lower() == "h":
-            os.system('clear')
-            print("server.properties düzenlenmedi devam ediliyor.")
-        else:
-            os.system("clear")
-            print("Tanımlanmayan cevap, Sürüm seçimine dönülüyor.")
-        print("Server başlatılacak, onaylıyor musunuz?")
-        onay3 = input("(E/H): ")
-        if onay3.strip().lower() == "e":
-            os.system("clear")
-            os.system("./start.sh")
-        elif onay3.strip().lower() == "h":
-            os.system('clear')
-            print("Server başlatılmadı, geri dönülüyor.")
-        else:
-            os.system("clear")
-            print("Tanımlanmayan cevap, Sürüm seçimine dönülüyor.")
-        
+    else:
+        print("Wrong data input, try again.")
+def start():
+    os.system("clear")
+    print("Before run the server, be sure server.properties configured correctly.")
+    print("Type 'stop' to stop the server while running.")
+    print("Do you want configure the server.properties?")
     while True:
-        os.chdir(defLoc)
-        version = ""
-        SurumInput = input("Çıkmak için:'quit'".center(30) +"\nLütfen sürüm seçiniz örn(1.15.2): ")
-        if SurumInput == "quit":
-            os.system("clear")
+        print("y:yes / n:no")
+        editq = input("(y/n): ")
+        if editq.strip().lower() == "y":
+            os.system("nano server.properties")
             break
-        elif SurumInput.isalpha():
-            os.system("clear")
-            print("Hatalı sürüm seçimi, lütfen tekrar deneyiniz. Çıkmak için 'quit'. ")
+        elif editq.strip().lower() == "n":
+            print("server.properties file is not edited, continuing.")
+            break
         else:
-            surumparcali = SurumInput.strip().lower().split(".")
-            for parca in surumparcali:
-                if parca.isnumeric() and len(surumparcali)<=3 and len(surumparcali) > 2:
-                    if surumparcali.index(parca) == len(surumparcali) -1:
-                        version += parca
-                    else:
-                        version += parca + "."
-                else:
-                    os.system("clear")
-                    print("Hatalı sürüm seçimi, lütfen tekrar deneyiniz. Çıkmak için 'quit'. ")
+            os.system("clear")
+            print("Unidintified answer, try again.")
+    print("Server starting in 2 sec.")
+    sleep(1)
+    print("Server starting in 1 sec.")
+    sleep(1)
+    os.system("clear")
+    os.system("./start.sh")
+def check(version,location):
+    while True:
+        selectedLoc = location+"/minecraftServers/"+version
+        print(f"Searching path: {selectedLoc}")
+        if not os.path.exists(selectedLoc):
+            print(f"Path not found, creating: {selectedLoc}")
+            os.makedirs(selectedLoc)
+            print(f"Path created successfully: {selectedLoc}")    
+        elif os.path.exists(selectedLoc):
+            os.chdir(selectedLoc)
+            print(f"Path found, locating: {selectedLoc}")
+            print(f"Path located successfully: {selectedLoc}")
+            print("Searching file in path: server.jar")
+            if os.path.exists("server.jar"):
+                print("File found: server.jar")
+                print("Searching file in path: start.sh")
+                if os.path.exists("start.sh"):
+                    print("File found: start.sh")
                     break
-            print(f"{version} sürümü için işlem başlatılacak, onaylıyor musunuz?")
-            onay = input("(E/H): ")
-            if onay.strip().lower() == "h":
-                os.system("clear")
-                print("Sürüm seçimine dönülüyor.") 
-            elif onay.strip().lower() == "e":
-                secilenKonum = os.getcwd()+"/minecraftServers/"+version
-                print(f"Konum: {secilenKonum}")
-                if not os.path.exists(secilenKonum):
-                    os.makedirs(secilenKonum)
-                    print(f"{secilenKonum} konumu başarıyla yaratıldı.")
-                os.chdir(secilenKonum)
-                print(f"konuma gidildi: {secilenKonum}")
-                print("server.jar klasörde aranıyor.")
-                if not os.path.exists("server.jar"):
-                    print("server.jar klasörde bulunamadı, internette aranıyor.")
-                    download(version,secilenKonum)
-                elif os.path.exists("server.jar"):
-                    print("server.jar zaten yüklü, kuruluma geçiliyor.")
-                    if os.path.exists("start.sh"):
-                        print("Başlatma dosyası bulundu, server başlatılıyor.")
-                        baslat()
-                    elif not os.path.exists("start.sh"):
-                        print("Başlatma dosyası bulunamadı,server kuruluyor.")
-                        print("Server için ayıracağınız ram miktarını giriniz(MB): ")
-                        secilenram = input('MB: ') or '1024'
-                        kur(secilenram)   
+                    
+                else:
+                    print("File not found: start.sh")
+                    print("Setup is starting.")
+                    print("Type ram amount to give server(Default:1024): ")
+                    ramInput = input('MB: ')
+                    if ramInput.strip().lower().isnumeric(): 
+                        ram = ramInput.strip().lower()
+                    else:
+                        ram ='1024'
+                    setup(ram)
+                    break
             else:
-                os.system("clear")
-                print("Tanımlanmayan cevap, Sürüm seçimine dönülüyor.")
-elif os.name =="nt":
-    print("Işletim sistemi tespit edildi: Windows")
+                print("File not found: server.jar")
+                print("Searching file in Internet: server.jar")
+                download(version)
+                if not download(version) =="cancel":
+                    print("Setup is starting.")
+                    print("Type ram amount to give server(Default:1024): ")
+                    ramInput = input('MB: ')
+                    if ramInput.strip().lower().isnumeric(): 
+                        ram = ramInput.strip().lower()
+                    else:
+                        ram ='1024'
+                    setup(ram)
+                    break
+                else:
+                    os.rmdir(selectedLoc)
+                    os.chdir(location)
+                    return
+                
+    start()
+print("Welcome to Minecraft Server Manager.")
+print("If you want use defaults, hit enter when asked anything.")
+version = ""
+while True:
+    os.chdir(defLoc)
+    print("Type 'q' for quit")
+    edita = input("Type the version(Default:1.15.2): ")
+    if edita.strip().lower() == "q":
+        break
+    else:
+        version = edita.strip().lower() or "1.15.2"
+        check(version,defLoc)
+
