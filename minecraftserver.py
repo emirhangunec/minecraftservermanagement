@@ -4,7 +4,6 @@ import wget
 from time import sleep
 from bs4 import BeautifulSoup
 import requests
-
 defLoc = os.getcwd()
 clear = "clear"
 startText = "start.sh"
