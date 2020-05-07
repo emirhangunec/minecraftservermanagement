@@ -1,7 +1,7 @@
 # EN
 ## Information
 This mini-program/script helps you to creating self-hosted minecraft servers. Just open 25565 port on your router or use Hamachi and run this script. Then follow the instructions in terminal correctly and don't forget to edit server.properties.
-This python3 script for linux works correctly and windows.
+This python3 script works correctly linux and windows.
 - Script automatically downloads, sets with written ram amount and runs to written version of minecraft server.
 - If server alredy downloaded, script sets with written ram amount and runs to written version of minecraft server.
 - If server alredy downloaded and setted, script runs to written version of minecraft server.
