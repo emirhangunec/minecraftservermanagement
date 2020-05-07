@@ -18,7 +18,6 @@ def download(version):
             print("\nDownload completed successfully.")
     except ValueError:
         print(f"{version} version can't found, make sure to don't mistake.")
-        return "cancel"
     except:
         print("Something went wrong")
 def setup(ram):
@@ -36,7 +35,6 @@ def setup(ram):
                 print('Eula edited successfully.')
         except:
             print("Something went wrong")
-
     else:
         print("Wrong data input, try again.")
 def start():
@@ -80,8 +78,7 @@ def check(version,location):
                 print("Searching file in path: start.sh")
                 if os.path.exists("start.sh"):
                     print("File found: start.sh")
-                    break
-                    
+                    break               
                 else:
                     print("File not found: start.sh")
                     print("Setup is starting.")
@@ -96,22 +93,21 @@ def check(version,location):
             else:
                 print("File not found: server.jar")
                 print("Searching file in Internet: server.jar")
+                #if not download(version) =="cancel":
                 download(version)
-                if not download(version) =="cancel":
-                    print("Setup is starting.")
-                    print("Type ram amount to give server(Default:1024): ")
-                    ramInput = input('MB: ')
-                    if ramInput.strip().lower().isnumeric(): 
-                        ram = ramInput.strip().lower()
-                    else:
-                        ram ='1024'
-                    setup(ram)
-                    break
+                print("Setup is starting.")
+                print("Type ram amount to give server(Default:1024): ")
+                ramInput = input('MB: ')
+                if ramInput.strip().lower().isnumeric(): 
+                    ram = ramInput.strip().lower()
                 else:
-                    os.rmdir(selectedLoc)
-                    os.chdir(location)
-                    return
-                
+                    ram ='1024'
+                setup(ram)
+                break
+                #else:
+                    # os.rmdir(selectedLoc)
+                    # os.chdir(location)
+                    # return              
     start()
 print("Welcome to Minecraft Server Manager.")
 print("If you want use defaults, hit enter when asked anything.")
@@ -125,4 +121,3 @@ while True:
     else:
         version = edita.strip().lower() or "1.15.2"
         check(version,defLoc)
-
