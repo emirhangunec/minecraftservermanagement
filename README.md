@@ -14,6 +14,10 @@ sudo apt-get install python3
   sudo apt-get install python3-pip
   ```
   ```sh
+  pip install --upgrade pip
+  ```
+  ```sh
+  ```sh
   pip install wget
   ```
   ```sh
@@ -29,6 +33,9 @@ sudo apt-get install python3
 - install python3
 - run cmd and paste these:
   ```sh
+  python -m pip install --upgrade pip
+  ```
+  ```sh
   python -m pip install wget
   ```
   ```sh
@@ -40,10 +47,12 @@ sudo apt-get install python3
 
 ## Usage/Run
   #### For Linux:
+  - Go to folder and run this:
    ```sh
   ./minecraftserver.py
   ```
   #### For Windows:
+  - Go to folder and run this:
    ```sh
   python minecraftserver.py
   ```
