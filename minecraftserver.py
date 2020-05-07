@@ -4,24 +4,18 @@ import wget
 from time import sleep
 from bs4 import BeautifulSoup
 import requests
-# yapılacaklar
-# klasör konumu seçtirt yapıldı
-# sürüm seçtirt yapıldı
-# uygun sürüm için serveri konuma indirt yapıldı
 if os.name =="posix":
-    eskip =""
     os.system("clear")
     defKonum = os.getcwd()
-    print("Işletim sistemi tespit edildi: Linux")
-    print("Minecraft server kurma yöneticisine hoşgeldiniz.")
-    os.environ['MOZ_HEADLESS'] = '1'
-    def indir(surum,konum):
+    print("OS detected: Linux")
+    print("Welcome to Minecraft Server Manager .")
+    def indir(version,location):
         try:
-            r = requests.get(f"https://mcversions.net/download/{surum}")
+            r = requests.get(f"https://mcversions.net/download/{version}")
             soup = BeautifulSoup(r.content,"html.parser")
             if soup.title.string =="MCVersions.net - 404 File not found":
-                print(f"{surum} yok!")
-            elif soup.title.string ==f"MCVersions.net - Create your own {surum} Minecraft server!":  
+                print(f"{version} can't found, ")
+            elif soup.title.string ==f"MCVersions.net - Create your own {version} Minecraft server!":  
                 mydivs = soup.find_all('a', "button")
                 link = mydivs[0].get("href")
                 print("server.jar başarıyla bulundu, indirme işlemi başlayacak.")
