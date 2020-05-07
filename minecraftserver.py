@@ -6,15 +6,15 @@ from bs4 import BeautifulSoup
 import requests
 if os.name =="posix":
     os.system("clear")
-    defKonum = os.getcwd()
+    defLoc = os.getcwd()
     print("OS detected: Linux")
     print("Welcome to Minecraft Server Manager .")
-    def indir(version,location):
+    def download(version,location):
         try:
             r = requests.get(f"https://mcversions.net/download/{version}")
             soup = BeautifulSoup(r.content,"html.parser")
             if soup.title.string =="MCVersions.net - 404 File not found":
-                print(f"{version} can't found, ")
+                print(f"{version} can't found, make sure to don't mistake.")
             elif soup.title.string ==f"MCVersions.net - Create your own {version} Minecraft server!":  
                 mydivs = soup.find_all('a', "button")
                 link = mydivs[0].get("href")
@@ -74,7 +74,7 @@ if os.name =="posix":
             print("Tanımlanmayan cevap, Sürüm seçimine dönülüyor.")
         
     while True:
-        os.chdir(defKonum)
+        os.chdir(defLoc)
         version = ""
         SurumInput = input("Çıkmak için:'quit'".center(30) +"\nLütfen sürüm seçiniz örn(1.15.2): ")
         if SurumInput == "quit":
@@ -111,7 +111,7 @@ if os.name =="posix":
                 print("server.jar klasörde aranıyor.")
                 if not os.path.exists("server.jar"):
                     print("server.jar klasörde bulunamadı, internette aranıyor.")
-                    indir(version,secilenKonum)
+                    download(version,secilenKonum)
                 elif os.path.exists("server.jar"):
                     print("server.jar zaten yüklü, kuruluma geçiliyor.")
                     if os.path.exists("start.sh"):
