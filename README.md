@@ -17,7 +17,6 @@ sudo apt-get install python3
   pip install --upgrade pip
   ```
   ```sh
-  ```sh
   pip install wget
   ```
   ```sh
