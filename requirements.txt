@@ -1,5 +1,3 @@
 wget
 requests
 beautifulsoup4
-os
-time
