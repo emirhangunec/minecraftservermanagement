@@ -24,8 +24,8 @@ sudo apt-get install python3
   chmod +x minecraftserver.py
   ```
 #### For Windows:
-- install python3
-- run cmd and paste these:
+- Download and install python3: https://www.python.org/downloads/release/python-382/
+- run cmd, go to folder  'minecraftservermanagement' and paste these:
   ```sh
   python -m pip install --upgrade pip
   ```
@@ -35,12 +35,12 @@ sudo apt-get install python3
 
 ## Usage/Run
   #### For Linux:
-  - Go to folder and run this:
+  - Go to folder  'minecraftservermanagement' and run this:
    ```sh
   ./minecraftserver.py
   ```
   #### For Windows:
-  - Go to folder and run this:
+  - Go to folder  'minecraftservermanagement' and run this:
    ```sh
   python minecraftserver.py
   ```
@@ -54,7 +54,7 @@ Bu pythno3 scripti belirtilen işletim sistemlerinde doğru bir şekilde çalı�
 - Eğer dosyalar daha önce indirilmiş ve kurulmuşsa, seçtiğiniz sürümdeki serverı çalıştırır.
 ## Kurulum
 #### Linux için:
-- Gereklilikleri yükleyin ve dosyayı çalıştırılabilir moda getirin.
+- Gereklilikleri yükleyin ve dosyayı çalıştırılabilir moda getirin:
 ```sh
 sudo apt-get install python3
   ```
