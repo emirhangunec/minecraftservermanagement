@@ -16,7 +16,7 @@ def download(version):
         soup = BeautifulSoup(requests.get(f"https://mcversions.net/download/{version}").content,"html.parser")
         if soup.title.string =="MCVersions.net - 404 File not found":
             raise ValueError()
-        elif soup.title.string ==f"MCVersions.net - Create your own {version} Minecraft server!":  
+        elif soup.title.string ==f"MCVersions.net - Create your own {version} Minecraft server!":
             mydivs = soup.find_all('a', "button")
             link = mydivs[0].get("href")
             wget.download(link)
@@ -81,7 +81,7 @@ def check(version,location):
         if not os.path.exists(selectedLoc):
             print(f"Path not found, creating: {selectedLoc}")
             os.makedirs(selectedLoc)
-            print(f"Path created successfully: {selectedLoc}")    
+            print(f"Path created successfully: {selectedLoc}")
         elif os.path.exists(selectedLoc):
             os.chdir(selectedLoc)
             print(f"Path found, locating: {selectedLoc}")
@@ -92,14 +92,14 @@ def check(version,location):
                 print(f"Searching file in path: {startText}")
                 if os.path.exists(startText):
                     print(f"File found: {startText}")
-                    break               
+                    break
                 else:
                     print(f"File not found: {startText}")
                     print("Setup is starting.")
                     print("Type ram amount to give server(Default:1024): ")
                     print("Hit enter to use default.")
                     ramInput = input('MB: ')
-                    if ramInput.strip().lower().isnumeric(): 
+                    if ramInput.strip().lower().isnumeric():
                         ram = ramInput.strip().lower()
                     else:
                         ram ='1024'
@@ -114,13 +114,13 @@ def check(version,location):
                 print("Type ram amount to give server(Default:1024): ")
                 print("Hit enter to use default.")
                 ramInput = input('MB: ')
-                if ramInput.strip().lower().isnumeric(): 
+                if ramInput.strip().lower().isnumeric():
                     ram = ramInput.strip().lower()
                 else:
                     ram ='1024'
                 os.chdir(selectedLoc)
-                setup(ram)      
-    os.chdir(selectedLoc)      
+                setup(ram)
+    os.chdir(selectedLoc)
     start()
 print("Welcome to Minecraft Server Manager.")
 print("If you want use defaults, hit enter when asked anything.")
